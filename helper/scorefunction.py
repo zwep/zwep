@@ -7,7 +7,7 @@ Make the scoring of models even more easy...
 
 
 import sklearn
-from dia.helper.plotfunction import tsne_plot
+from zwep.helper.plotfunction import tsne_plot
 import numpy as np
 
 

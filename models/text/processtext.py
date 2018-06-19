@@ -30,8 +30,8 @@ import gensim.summarization.keywords as kwrds_textRank
 import nltk
 import numpy as np
 
-from dia.helper.miscfunction import find_ngrams
-from dia.models.text.docembedding import TFIDF
+from zwep.helper.miscfunction import find_ngrams
+from zwep.models.text.docembedding import TFIDF
 
 
 class CleanText:
