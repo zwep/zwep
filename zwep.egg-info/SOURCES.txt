@@ -1,5 +1,5 @@
 MANIFEST.in
-README.md
+README.rst
 setup.py
 helper/__init__.py
 helper/filemanager.py

@@ -2,7 +2,7 @@ Metadata-Version: 1.1
 Name: zwep
 Version: 0.1.0
 Summary: My own package...
-Home-page: UNKNOWN
+Home-page: http://github.com/zwep/zwep
 Author: Seb Harrevelt
 Author-email: sebharrevelt@gmail.com
 License: MIT
