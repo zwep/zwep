@@ -6,7 +6,7 @@ def requirements():
         return f.read().strip().split('\n')
 
 def readme():
-    with open('README.md') as f:
+    with open('README.rst') as f:
         return f.read()
 
 setuptools.setup(name='zwep',
