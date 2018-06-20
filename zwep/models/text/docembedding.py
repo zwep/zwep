@@ -11,7 +11,7 @@ import itertools
 import warnings
 import numpy as np
 
-from dia.helper.miscfunction import cluster_diff_list
+from zwep.helper.miscfunction import cluster_diff_list
 
 
 class TFIDF:

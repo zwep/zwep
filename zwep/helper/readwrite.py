@@ -11,7 +11,7 @@ import inspect
 import re
 import warnings
 
-from dia.helper import miscfunction as misc
+from zwep.helper import miscfunction as misc
 
 
 def read_txt_file(path, n_files=None):
