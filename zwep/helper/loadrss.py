@@ -96,7 +96,7 @@ class RssUrl:
         :return: Beautiful soup object that contains all the text that is being returned..
         """
         # import feedparser  # Usefull to parse RSS feeds
-        from dia.helper.miscfunction import dict_find
+        from zwep.helper.miscfunction import dict_find
         from bs4 import BeautifulSoup as bS
 
         url_label = self.get_label(news_source)
