@@ -5,6 +5,10 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+# Because intellij is a bitch
+.idea
+*.iml
+
 # C extensions
 *.so
 
