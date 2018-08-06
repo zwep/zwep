@@ -57,14 +57,18 @@ class RssUrl:
         :param news_source: nos, rtl or nu
         :return: Beautiful soup object that contains all the text that is being returned..
         """
-        url_list = self.get_url_feed(news_source)
-        label_name = self.url_dict[news_source]['name']
-        news_source_dict = {}  # This dict is used to store all the info of the news_source
+        url_list = self.get_url_feed(news_source)  # This provides a list with URLs...
+        label_name = self.url_dict[news_source]['name']  # This is the label name of the news category
+        assert len(url_list) == len(label_name)  # These two should be of equal length
+
+        news_text_list = []  # This list is used to store all the info of the news_source
         for i_name, i_url in zip(label_name, url_list):
-            temp_content = []  # This list is used to store info from the i_url content
-            url_content = feedparser.parse(i_url)  # This parses the rss result...
+            url_content = feedparser.parse(i_url)
+            # Now we can loop over the individual news entries obtained from
+            # the i_url link
+
             for i_entry in url_content['entries']:
-                # Here we get all the entries and fill it up
+                # Here we get all the entries and store these results in a temp dictionary
                 # Could also been in done list comprehension.. but its not that more beautiful...
                 temp_text = i_entry['summary_detail']['value']
                 title_text = i_entry['title']
@@ -72,12 +76,12 @@ class RssUrl:
                 date_text = i_entry['published']
                 temp_dict = {'title': title_text,
                              'content': content_text,
-                             'date': date_text}
-                temp_content.append(temp_dict)
+                             'date': date_text,
+                             'category': i_name,
+                             'source': news_source}
+                news_text_list.append(temp_dict)
 
-            news_source_dict[i_name] = temp_content  # Add all the content..
-
-        return news_source_dict
+        return news_text_list
 
     def get_all_content(self):
         """
