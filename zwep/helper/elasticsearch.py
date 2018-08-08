@@ -62,6 +62,7 @@ def identify_duplicate_titles(all_content):
 
 
 def find_duplicate_titles(duplicate_dict):
+    es = Elasticsearch()
     test_dates = []
     test_content = []
     for k, v in duplicate_dict.items():
@@ -81,6 +82,7 @@ def find_duplicate_titles(duplicate_dict):
 
 
 def delete_duplicate_titles(index, duplicate_dict):
+    es = Elasticsearch()
     for k, v in duplicate_dict.items():
         if len(v) > 1:
             for i_id in v[1:]:
