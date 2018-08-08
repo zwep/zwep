@@ -23,16 +23,48 @@ class RssUrl:
         initializes the RssUrl.
         This allows you to easily create the urls to fetch data
         """
-        self.url_dict = {'nos': {'label': ['nosnieuwsbinnenland', 'nossportalgemeen'],
-                                 'name': ['nederland', 'sport'],
+        self.url_dict = {'nos': {'label': ['nosnieuwsalgemeen', 'nosnieuwsbinnenland',
+                                           'nosnieuwsbuitenland', 'nosnieuwspolitiek',
+                                           'nosnieuwseconomie', 'nosnieuwsopmerkelijk',
+                                           'nosnieuwskoningshuis', 'nosnieuwscultuurenmedia',
+                                           'nosnieuwstech', 'nossportalgemeen',
+                                           'nosvoetbal', 'nossportwielrennen',
+                                           'nossportschaatsen', 'nossporttennis',
+                                           'nieuwsuuralgemeen',],
+                                 'name': ['algemeen', 'nederland',
+                                          'buitenland', 'politiek',
+                                          'economie', 'opmerkelijk',
+                                          'koningshuis', 'cultuur',
+                                          'tech', 'sport',
+                                          'voetbal', 'wielrennen',
+                                          'schaatsen', 'tennis',
+                                          'nieuwsuur'],
                                  'prefix': 'http://feeds.nos.nl/',
                                  'suffix': ''},
-                         'nu': {'label': ['Algemeen', 'Sport'],
-                                'name': ['algemeen', 'sport'],
+                         'nu': {'label': ['Algemeen', 'Sport',
+                                          'Economie', 'Internet',
+                                          'Achterklap', 'Opmerkelijk',
+                                          'Muziek', 'Film',
+                                          'Boek', 'Games',
+                                          'Wetenschap', 'Gezondheid'],
+                                'name': ['algemeen', 'sport',
+                                         'economie', 'tech',
+                                         'roddel', 'opmerkelijk',
+                                         'cultuur', 'cultuur',
+                                         'cultuur', 'tech',
+                                         'wetenschap', 'gezondheid'],
                                 'prefix': 'http://www.nu.nl/rss/',
                                 'suffix': ''},
-                         'rtl': {'label': ['nederland', 'Sport'],
-                                 'name': ['nederland', 'sport'],
+                         'rtl': {'label': ['nederland', 'nederland/politiek',
+                                           'buitenland', 'opmerkelijk',
+                                           'gezin', 'gezondheid',
+                                           'technieuws', 'sport/algemeen',
+                                           'sport/voetbal'],
+                                 'name': ['nederland', 'politiek',
+                                          'buitenland', 'opmerkelijk',
+                                          'gezin', 'gezondheid',
+                                          'tech', 'sport',
+                                          'voetbal'],
                                  'prefix': 'http://www.rtlnieuws.nl/service/rss/',
                                  'suffix': '/index.xml'}}
         self.news_source_list = self.url_dict.keys()
@@ -94,3 +126,34 @@ class RssUrl:
             full_text.update({i_news: self.get_url_content(i_news)})
 
         return full_text
+
+
+
+class TestRssUrl(RssUrl):
+    def test_url_feed(self, news_source):
+        """
+        See if can get a positive response
+        :return:
+        """
+        url_list = self.get_url_feed(news_source)  # This provides a list with URLs...
+        label_name = self.url_dict[news_source]['name']  # This is the label name of the news category
+        assert len(url_list) == len(label_name)  # These two should be of equal length
+
+        status_dict = {}
+        for i_name, i_url in zip(label_name, url_list):
+            url_content = feedparser.parse(i_url)
+            if url_content.status == 200:
+                temp_dict = {i_name: 'pass'}
+            elif url_content.status == 301:
+                temp_dict = {i_name: 'moved'}
+            else:
+                temp_dict = {i_name: url_content.status}
+
+            status_dict.update(temp_dict)
+        return {news_source: status_dict}
+
+
+a = TestRssUrl()
+a.test_url_feed('nos')
+a.test_url_feed('nu')
+a.test_url_feed('rtl')
